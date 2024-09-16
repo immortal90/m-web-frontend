@@ -16,19 +16,26 @@ function DataTable(config, data) {
         headerRow.appendChild(th);
     });
 
-    users.forEach(user => {
+    const createTableCell = content => {
+        const td = document.createElement("td");
+        td.textContent = content;
+        return td;
+    };
+
+    const createTableRow = user => {
         const tr = document.createElement("tr");
-        const tdId = document.createElement("td");
-        tdId.textContent = user.id;
-        tr.appendChild(tdId);
-        const tdName = document.createElement("td");
-        tdName.textContent = user.name;
-        tr.appendChild(tdName);
-        const tdSurname = document.createElement("td");
-        tdSurname.textContent = user.surname;
-        tr.appendChild(tdSurname);
+        tr.appendChild(createTableCell(user.id));
+        tr.appendChild(createTableCell(user.name));
+        tr.appendChild(createTableCell(user.surname));
+        return tr;
+    };
+
+    const addRowToTable = (tbody, user) => {
+        const tr = createTableRow(user);
         tbody.appendChild(tr);
-    })
+    };
+
+    users.forEach(user => addRowToTable(tbody, user));
 
     parentElement.appendChild(table);
 }
