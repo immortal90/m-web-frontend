@@ -32,25 +32,31 @@ const cities = `48.30,32.16,Кропивницький,200000,
 
 # в цьому файлі три рядки-коментаря :)`;
 
-let temp;
-let city;
-const processCities = csv => (str => str
-    .replace(/\{([^}]+)}/g, (_, cityName) => (temp = csv.split("\n")
-        .filter(temp => temp.trim() !== '' && !temp.trim().startsWith("#"))
-        .map(city => ({
-            latitude: city.split(',')[0],
-            longitude: city.split(',')[1],
-            city: city.split(',')[2],
-            population: parseInt(city.split(',')[3])
-        }))
+const processCities = (csv) => (str) => {
+    const topCities = csv
+        .split("\n")
+        .filter((line) => line.trim() && !line.trim().startsWith("#"))
+        .map((line) => {
+            const [latitude, longitude, city, population] = line.split(",");
+            return { city, population: Number(population) };
+        })
         .sort((a, b) => b.population - a.population)
         .slice(0, 10)
-        .reduce((accumulator, city, index) => ({
-            ...accumulator,
-            [city.city]: {population: city.population, rating: index + 1}
-        }), {}), city = temp[cityName], city ? `City: ${cityName}, Population: ${city.population}, Rating: ${city.rating}` : `{${cityName}}`)));
+        .reduce((acc, city, index) => {
+            acc[city.city] = { population: city.population, rating: index + 1 };
+            return acc;
+        }, {});
 
+    return str.replace(/\{([^}]+)}/g, (_, cityName) => {
+        const city = topCities[cityName];
+        return city
+            ? `City: ${cityName}, Population: ${city.population}, Rating: ${city.rating}`
+            : `{${cityName}}`;
+    });
+};
 
 const replaceCityData = processCities(cities);
-const result = replaceCityData("The top cities are {Київ}, {Харків}, and {Одеса}.");
+const result = replaceCityData(
+    "The top cities are {Київ}, {Харків}, and {Одеса}."
+);
 console.log(result);
