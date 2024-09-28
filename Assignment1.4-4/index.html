@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="addItemModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Додати новий елемент</h2>
+        <form id="addItemForm" data-config="products" novalidate>
+            <div id="formFields"></div>
+            <button type="submit">Зберегти</button>
+        </form>
+    </div>
+</div>
+<div id="productsTable"></div>
+<div id="usersTable"></div>
+<script type="module" src="index.js"></script>
+</body>
+</html>
