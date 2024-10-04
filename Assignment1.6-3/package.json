@@ -1,0 +1,13 @@
+{
+  "name": "assignment1.6-1",
+  "version": "1.0.0",
+  "description": "test",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ihor kopach",
+  "license": "ISC"
+}
